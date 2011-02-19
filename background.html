@@ -1,0 +1,25 @@
+<script src="webdelay.js"></script>
+<script>
+chrome.tabs.onUpdated.addListener(
+	function(tabId, changeInfo, tab)
+	{
+		WebDelay.onTabLoad(tab);
+	}
+);
+
+function initStorage(key, initialValue) { 
+  var currentValue = localStorage[key]; 
+  if (!currentValue) { 
+    localStorage[key] = initialValue; 
+    return true; 
+  } 
+  return false; 
+} 
+
+// Reset and initialize localStorage
+
+localStorage["delayedTabs"] = JSON.stringify([]);
+initStorage("delayTime", (30000).toString());
+initStorage("matchList", JSON.stringify(["facebook", "twitter", "google\\.com\\/reader"]));
+
+</script>

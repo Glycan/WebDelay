@@ -1,0 +1,38 @@
+<html><head><title></title>
+<style>
+body {
+  min-width:357px;
+  overflow-x:hidden;
+}
+</style></head>
+<script type="text/javascript">
+
+
+function saveOptions() {
+  var delaySeconds = document.getElementById("delaySeconds");
+  localStorage["delayTime"] = (Number(delaySeconds.value)*1000).toString();
+
+
+  var matchList = document.getElementById("matchList").value.split('\n');
+  localStorage["matchList"] = JSON.stringify(matchList);
+}
+
+
+function restoreOptions() {
+  var delayTime = localStorage["delayTime"];
+  document.getElementById("delaySeconds").value = Number(delayTime)/1000;
+
+  document.getElementById("matchList").value = eval('(' + localStorage["matchList"] + ')').join('\n');
+}
+
+</script>
+<body onload="restoreOptions();">
+<h2>WebDelay Options</h2>
+
+Delay in seconds: <input type="text" id="delaySeconds"/> <br/><br/>
+
+Match list:<br/>
+<textarea id="matchList" rows="10" cols="40"></textarea>
+<br/><br/>
+<button onclick="saveOptions()">Save</button>
+</body></html>

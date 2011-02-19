@@ -1,0 +1,46 @@
+<html><head><title>Delay</title></head>
+<script type="text/javascript">
+
+	var D = 30000; // duration of animation
+	var S = 100; // time between updates of animation (slice)
+	var bw = 300; // bar width
+	var bh = 100; // bar height
+	var T = 2; // bar outline thickness
+	var p = 0; // percentage complete
+
+	function updateP() {
+		p += S/D;
+		if(p>=1.0) {
+			p = 1.0;
+			drawShape(true);
+		} else {
+			drawShape(false);
+		}
+	}
+
+	function drawShape(finished) {
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+
+		ctx.fillStyle = "rgb(255,255,255)";
+
+		ctx.fillRect(0,0,bw,bh);
+
+		if(p<1.0) 
+			ctx.clearRect(bw*p+T,T,bw-bw*p-T*2,bh-T*2);
+
+		if(!finished) setTimeout(updateP, S);
+	}
+
+	function setup() {
+		D = Number(decodeURIComponent(location.search.replace('?delay=', '')));
+		drawShape(false);
+	}
+</script>
+<body onload="setup();" bgcolor="#000000">
+<center>
+<canvas id="canvas" width="300" height="100">
+This text is displayed if your browser does not support HTML5 Canvas.
+</canvas>
+</center>
+</body></html>
